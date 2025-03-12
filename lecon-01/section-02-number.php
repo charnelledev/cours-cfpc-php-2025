@@ -59,7 +59,7 @@ echo '<br>';
 
 
 
-8. Fonctions mathématiques
+// 8. Fonctions mathématiques
 
 
 
@@ -80,11 +80,6 @@ echo "round(2.6) : " . round(2.6) . '<br>';
 echo "floor(2.6) : " . floor(2.6) . '<br>';
 
 echo "ceil(2.4) : " . ceil(2.4) . '<br>';
-
-
-
-
-
 
 
 
