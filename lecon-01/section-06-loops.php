@@ -27,13 +27,3 @@ $fruits = ["Apple", "Banana", "Cherry"];
 foreach ($fruits as $index => $fruit) {
  echo "Fruit $index: $fruit<br>";
 }
-
-$personDetails = [
- 'firstName' => 'Owen',
- 'lastName' => 'Eva',
- 'age' => 25,
- 'occupation' => 'Developer'
-];
-foreach ($personDetails as $key => $value) {
- echo "$key: $value<br>";
-}
