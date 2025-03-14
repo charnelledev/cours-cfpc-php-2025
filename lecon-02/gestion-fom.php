@@ -30,7 +30,7 @@ if (isset($_POST['create'])) {
     if(empty($nom_student)|| empty($prenom_student)|| empty($email_student)) {
         $message ="vaillez saisir tous les champs";
     }else{
-        echo"Nom:$nom: $nom_student <br>";
+        // echo"Nom: $nom_student <br>";
     }
 }
 
