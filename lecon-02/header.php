@@ -1,8 +1,3 @@
-<?php
-?>
-
-
-
 
 
 <!-- header.php -->
@@ -11,10 +6,10 @@
 
 <head>
   <title>Mon site web</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="src/output.css">
 </head>
 
-<body class="bg-gray-100 font-sans">
+<body class="bg-gray-200 font-sans">
   <header class="bg-white shadow-md py-4">
     <div class="container mx-auto flex justify-between items-center">
       <h1 class="text-2xl font-bold text-gray-800">Mon site web</h1>
