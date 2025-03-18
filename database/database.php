@@ -2,9 +2,9 @@
 $hostname="127.0.0.1";
 $database="cours-cfpc-php-2025";
 
-$dsn="mysql:host=$hostname;dbname=$database";
-$username = "root";
-$password="";
+$dsn="pgsql:host=$hostname;dbname=$database";
+$username = "postgres";
+$password="3231";
 
 
 try {
