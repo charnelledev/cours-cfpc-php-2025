@@ -2,13 +2,13 @@
 $hostname="127.0.0.1";
 $database="cours-cfpc-php-2025";
 
-$dsn="pgsql:host=$hostname;dbname=$database";
-$username = "postgres";
-$password="3231";
+$dsn="mysql:host=$hostname;dbname=$database";
+$username = "root";
+$password="";
 
 
 try {
-    $connect= new PDO($dsn, $username, $password, );
+    $pdo= new PDO($dsn, $username, $password, );
   
     echo "Succès : Connexion à la base de données établie avec succès !";
   } catch (Exception $e) {

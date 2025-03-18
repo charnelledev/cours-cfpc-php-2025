@@ -1,14 +1,28 @@
 <?php
-require_once"database/database.php";
+require_once "database/database.php";
 
+
+//requete sql
 $sql = "SELECT *FROM students";
-$result = $connect->query($sql);
+// $result = $connect->query($sql);
+
+//preparer notre requete
+
+$request =$pdo->prepare($sql);
+
+//executer notre requete
+$request->execute();
+
+
+// $result=$request->fetchALL();
+$result=$request->fetchALL(PDO::FETCH_ASSOC);
+
 
 echo"<pre>";
 var_dump($result);
 echo"</pre>";
 
-if ($result->rowCount()>0)
+if (count($result)>0)
 {
 
 
