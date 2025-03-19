@@ -1,6 +1,6 @@
 <?php
 $hostname="127.0.0.1";
-$database="tp-01-crud-student";
+$database="tp-01-crud";
 
 $dsn="mysql:host=$hostname;dbname=$database";
 $username = "root";
