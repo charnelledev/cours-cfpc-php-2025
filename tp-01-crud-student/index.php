@@ -1,8 +1,36 @@
 <?php
 require_once "database.php";
 
+$sql = "SELECT * FROM students";
+
+
+//preparer la requete 
+$req_select = $pdo->prepare($sql);
+
+//executer la requete
+$req_select->execute();
+
+//recuperer les resultats
+$donnees = $req_select->fetchAll();
+
+//verifie s'il y'a des donnees dans le tableau
+if(count($donnees) > 0){
+  echo "Nombre d'etudiants : ".count($donnees);
+}else{
+  echo "Aucun etudiant trouve";
+}
 
 ?>
+
+
+
+
+
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -43,11 +71,14 @@ require_once "database.php";
       </thead>
       <tbody class="divide-y divide-green-100">
 
+       <?php foreach($donnees as $donnees): ?>
         <tr class="hover:bg-green-50">
-          <td class="px-6 py-4 whitespace-nowrap text-sm text-green-900">nom</td>
-          <td class="px-6 py-4 whitespace-nowrap text-sm text-green-900">premon
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-green-900"> 
+            <?php  echo $donnees ['nom']; ?> </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-green-900">
+            <?php  echo $donnees ['prenom']; ?>
           </td>
-          <td class="px-6 py-4 whitespace-nowrap text-sm text-green-900">mail
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-green-900"><?php  echo $donnees ['mail']; ?>
           </td>
           <td class="px-6 py-4 whitespace-nowrap text-sm">
             <a class="text-green-600 hover:text-green-900 font-medium mr-4" href="">Modifier</a>
@@ -55,7 +86,7 @@ require_once "database.php";
               onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet étudiant ?');">Supprimer</a>
           </td>
         </tr>
-
+        <?php endforeach; ?>
       </tbody>
     </table>
 
