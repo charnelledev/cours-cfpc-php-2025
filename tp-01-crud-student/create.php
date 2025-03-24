@@ -1,6 +1,10 @@
 <?php
 require_once "./database.php";
 $message = "";
+function clean_input($data){
+  return htmlspecialchars(stripslashes(trim($data)));
+  
+}
 
 if(isset($_POST['create'])){
   $nom = $_POST['nom'];
@@ -14,7 +18,7 @@ if(isset($_POST['create'])){
   $request_mail = $pdo->prepare($sql_mail);
   $request_mail->execute(compact('mail'));
   $mail_exist= $request_mail->fetch();
-  
+
   if($mail_exist){
     $message = ' <span style="background:red; padding:10px;  color:white margin:15px;"> Email existe deja </span>';
   }else{
