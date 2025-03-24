@@ -13,13 +13,39 @@ if(isset($_GET['id'])){
   $request = $pdo->prepare($sql);
   $request->execute(compact('id'));
   $student = $request->fetch();
+  // Récupération des données
+  $nom = $student['nom'];
+  $prenom = $student['prenom'];
+  $mail = $student['mail'];
 
-//   var_dump($student['nom']);
-   
-
-  
 }
 
+if(isset($_POST['update'])){
+  $nom = clean_input($_POST['nom']);
+  $prenom = clean_input($_POST['prenom']);
+  $mail = clean_input($_POST['mail']);
+}
+    if(empty($nom) || empty($prenom) || empty($mail)){
+        $message = "<p class='text-red-500'>Tous les champs sont obligatoires</p>";
+    }else{
+        //verifie si l'email existe deja
+        $sql_mail="SELECT COUNT(*) FROM students WHERE mail= ? AND id !=?";
+        $check_mail = $pdo->prepare($sql_mail);
+        $check_mail->execute([$mail, $id]); 
+        $mail_exist = $check_mail->fetchColumn();
+        
+
+        if($mail_exist){
+            $message = '<p class="error">Cet email existe deja</p>';
+        
+
+    
+}else{
+    $sql = "UPDATE students SET nom=:nom, prenom=:prenom, mail=:mail WHERE id=:id";
+    $request = $pdo->prepare($sql);
+    $request->execute(compact('nom', 'prenom', 'mail', 'id'));
+}
+    }
 
 
 
