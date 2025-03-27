@@ -40,6 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if($mailExist){
             return "le mail est deja utiliser";
         }
+    if(strlen($mdp<8) ||!preg_match("#[0-9]+#",$mdp) ||!preg_match("#[a-zA-Z]+#",$mdp)){}
     }
     //verification de la validité de l'adresse mail
     $error = register($pseudo, $mail, $mail2, $mdp, $mdp2);
