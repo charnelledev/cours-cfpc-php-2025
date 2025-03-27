@@ -1,7 +1,5 @@
 <?php
 require_once 'database.php';
-$mailconnect = htmlspecialchars($_POST['mailconnect']);
-$mdpconnect = $_POST['mdpconnect'];
 
 function handlePostRequest($pdo)
 {
@@ -11,6 +9,8 @@ function handlePostRequest($pdo)
 
     }
     //recuperation des donnees de formulaire
+    $mailconnect = htmlspecialchars($_POST['mailconnect']);
+    $mdpconnect = $_POST['mdpconnect'];
     if (empty($mailconnect) || empty($mdpconnect)){
         return "tous les champs doivent etre remplir";
     }
@@ -24,10 +24,15 @@ function authenticateUser($pdo, $mailconnect,$mdpconnect)
     $sql = "SELECT * FROM membres WHERE mail = :mailconnect";
     $reqMail = $pdo->prepare($sql);
     $reqMail->execute(compact('mailconnect'));
-    $mailExist = $reqMail->fetch();
+    $mailExist = $reqMail->rowCount();
     if (!$mailExist){
         return "se mail est introuvable";
     }
+    $userinfo = $reqMail->fetch();
+    var_dump($userinfo);
+    die();
+
+    // if(!password_verify($mdpconnect,$userinfo['mdp'] )){}
 }
     $erreur = handlePostRequest($pdo);
 
