@@ -40,7 +40,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if($mailExist){
             return "le mail est deja utiliser";
         }
-    if(strlen($mdp<8) ||!preg_match("#[0-9]+#",$mdp) ||!preg_match("#[a-zA-Z]+#",$mdp)){}
+    if(strlen($mdp<8) ||!preg_match("#[0-9]+#",$mdp) ||!preg_match("#[a-zA-Z]+#",$mdp)){
+        return"le mot de passe doit contenir au moins 8caracteres,une lettre et un chiffre";
+    }
     }
     //verification de la validité de l'adresse mail
     $error = register($pseudo, $mail, $mail2, $mdp, $mdp2);
@@ -76,17 +78,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="text-left flex flex-col gap-[7px]">
                 <label for="pseudo" class="">Pseudo :</label>
 
-                <input type="text" placeholder="Votre pseudo" id="pseudo" name="pseudo" class="w-full border border-green-300 p-2 rounded focus:outline-none focus:border-green-500" />
+                <input type="text" placeholder="Votre pseudo" id="pseudo" name="pseudo" value="<?= $pseudo ?? ?>" class="w-full border border-green-300 p-2 rounded focus:outline-none focus:border-green-500" />
             </div>
             <div class="text-left flex flex-col gap-[7px]">
                 <label for="mail">Mail :</label>
 
-                <input type="text" placeholder="Votre mail" id="mail" name="mail" class="w-full border border-green-300 p-2 rounded focus:outline-none focus:border-green-500" />
+                <input type="text" placeholder="Votre mail" id="mail" name="mail" value="<?= $mail ?? ?>" class="w-full border border-green-300 p-2 rounded focus:outline-none focus:border-green-500" />
             </div>
             <div class="text-left flex flex-col gap-[7px]">
                 <label for="mail2">Confirmation du mail :</label>
 
-                <input type="text" placeholder="Confirmez votre mail" id="mail2" name="mail2" class="w-full border border-green-300 p-2 rounded focus:outline-none focus:border-green-500" />
+                <input type="text" placeholder="Confirmez votre mail" id="mail2" name="mail2" value="<?= $mail2 ?? ?>" class="w-full border border-green-300 p-2 rounded focus:outline-none focus:border-green-500" />
             </div>
             <div class="text-left flex flex-col gap-[7px]">
                 <label for="mdp">Mot de passe :</label>
