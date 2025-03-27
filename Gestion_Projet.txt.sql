@@ -1,3 +1,0 @@
--- create table client(
---     id_cli int primary key unique,
--- )

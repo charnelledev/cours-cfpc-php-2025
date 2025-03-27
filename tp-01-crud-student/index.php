@@ -1,9 +1,17 @@
 <?php
 require_once "database.php";
 
-$sql = "SELECT * FROM students";
+// $sql = "SELECT * FROM students";
 
+$search = isset($_GET["search"]) ? trim($_GET["search"]) : "";
+// var_dump($search);
 
+// //requette sql pour recuperer les etudiants en fonction de la recherche(mail et nom)
+$sql ="SELECT * FROM students ";
+if (!empty($search)) {
+  $sql .="WHERE  nom LIKE '%$search%' OR prenom LIKE  '%$search%' OR  mail LIKE '%$search%'";
+  // var_dump($sql);
+}
 //preparer la requete 
 $req_select = $pdo->prepare($sql);
 
@@ -13,12 +21,16 @@ $req_select->execute();
 //recuperer les resultats
 $donnees = $req_select->fetchAll();
 
+
+
 //verifie s'il y'a des donnees dans le tableau
 if(count($donnees) > 0){
   echo "Nombre d'etudiants : ".count($donnees);
 }else{
   echo "Aucun etudiant trouve";
 }
+
+
 
 ?>
 
