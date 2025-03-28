@@ -5,9 +5,31 @@ if(isset($_SESSION['id']) AND $_SESSION['id']>0){
     $requser = $pdo->prepare('SELECT * FROM membres WHERE id =?');
     $requser->execute([$_SESSION['id']]);
     $user = $requser->fetch();
-    echo "<pre>";
-    var_dump($user);
-    echo "</pre>";
+    // echo "<pre>";
+    // var_dump($user);
+    // echo "</pre>";
+
+    // die();
+
+    if(!empty($_POST['newpseudo']) && $_POST['newpseudo'] !== $user['pseudo']){
+     
+    $newpseudo = htmlspecialchars($_POST['newpseudo']);
+
+    if(strlen($newpseudo)<255){
+        $requser = $pdo->prepare("SELECT *FROM  membres WHERE pseudo = ?");
+        $reqpseudo->execute([$newpseudo]);
+        $pseudoexist = $reqpseudo->rowCount();
+
+        if($pseudoexist == 0){
+            $requpdate = $pdo->prepare("UPDATE membres SET pseudo =? WHERE id = ?");
+            $requpdate->execute([$newpseudo, $_SESSION['id']]);
+            $_SESSION['pseudo'] = $newpseudo;
+            header("Location: profil.php?id=".$_SESSION['id'])
+        }else{
+            $erreur = "ce pseudo est deja utiliser"
+        }
+    }
+    }
 }
 ?>
 
@@ -29,9 +51,9 @@ echo '<font color="red">' . $erreur . "</font>";
     <div align="left">
       <form method="POST" action="" enctype="multipart/form-data">
         <label>Pseudo :</label>
-        <input type="text" name="newpseudo" placeholder="Pseudo" value="" /><br /><br />
+        <input type="text" name="newpseudo" placeholder="Pseudo" value="<?= $user['pseudo']?>" /><br /><br />
         <label>Mail :</label>
-        <input type="text" name="newmail" placeholder="Mail" value="" /><br /><br />
+        <input type="text" name="newmail" placeholder="Mail" value="<?= $user['mail']?>" /><br /><br />
         <label>Mot de passe :</label>
         <input type="password" name="newmdp1" placeholder="Mot de passe" /><br /><br />
         <label>Confirmation - mot de passe :</label>
