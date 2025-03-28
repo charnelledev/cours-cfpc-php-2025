@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once 'database.php';
 
 function handlePostRequest($pdo)
@@ -43,7 +44,19 @@ function authenticateUser($pdo, $mailconnect,$mdpconnect)
     if(!password_verify($mdpconnect,$userinfo['mdp'])){
         return "Mot de passe incorrect";
     }
-        return 'success';
+
+    // $_SESSION['userinfo'] = $userinfo;
+
+    // return 'success';
+    
+    //deffinition des variable session
+
+    $_SESSION['id']= $userinfo['id'];
+    $_SESSION['pseudo']= $userinfo['pseudo'];
+    $_SESSION['mail']= $userinfo['mail'];
+    header("Location: profil.php?id=" .$_SESSION['id']);
+    exit();
+        // return 'success';
 }
     $erreur = handlePostRequest($pdo);
 

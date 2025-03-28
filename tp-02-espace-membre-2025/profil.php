@@ -15,7 +15,7 @@ if(isset($_GET['id'] )){
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
+ 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,7 +24,7 @@ if(isset($_GET['id'] )){
 
 <body>
   <div align="center">
-    <h2>Profil de <?= $userinfo['pseudo']; ?></h2>
+    <h2>Profil de angel<?= $userinfo['pseudo']; ?></h2>
     <br />
 
     <?php if(!empty($userinfo['avatar'])){?>
