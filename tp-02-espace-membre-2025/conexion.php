@@ -11,6 +11,7 @@ function handlePostRequest($pdo)
     //recuperation des donnees de formulaire
     $mailconnect = htmlspecialchars($_POST['mailconnect']);
     $mdpconnect = $_POST['mdpconnect'];
+    // var_dump($mdpconnect);
     if (empty($mailconnect) || empty($mdpconnect)){
         return "tous les champs doivent etre remplir";
     }
@@ -29,10 +30,20 @@ function authenticateUser($pdo, $mailconnect,$mdpconnect)
         return "se mail est introuvable";
     }
     $userinfo = $reqMail->fetch();
-    var_dump($userinfo);
-    die();
 
-    // if(!password_verify($mdpconnect,$userinfo['mdp'] )){}
+    //aligner le code
+
+    // echo "<pre>";
+    // // (afficher uniquement le mot de passe)
+    // print_r($userinfo['mdp']);
+    // echo "</pre>";
+  
+    // die();
+
+    if(!password_verify($mdpconnect,$userinfo['mdp'])){
+        return "Mot de passe incorrect";
+    }
+        return 'success';
 }
     $erreur = handlePostRequest($pdo);
 
