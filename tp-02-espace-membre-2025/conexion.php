@@ -30,9 +30,6 @@ function authenticateUser($pdo, $mailconnect,$mdpconnect)
         return "se mail est introuvable";
     }
     $userinfo = $reqMail->fetch();
-    if (!$userinfo) {
-        return "Ce mail est introuvable";
-    }
 
     //aligner le code
 
@@ -44,17 +41,13 @@ function authenticateUser($pdo, $mailconnect,$mdpconnect)
     // die();
 
     if(!password_verify($mdpconnect,$userinfo['mdp'])){
-        return 'Mot de passe incorrect';
+        return "Mot de passe incorrect";
     }
         return 'success';
 }
     $erreur = handlePostRequest($pdo);
 
-
-
-
-
-?> 
+?>
 
 
 
@@ -77,12 +70,15 @@ function authenticateUser($pdo, $mailconnect,$mdpconnect)
     <h2  class="text-4xl font-bold text-green-900 text-center mb-6">Connexion</h2>
     <br /><br />
     <form method="POST" action="" class="bg-white p-6 rounded shadow max-w-lg mx-auto">
-    <?php
-            if (isset($erreur)) {
-                echo '<p class="bg-red-500 w-full border border-green-300 p-2 rounded focus:outline-none focus:border-green-500 text-white font-bold">' . $erreur . '</p>';
-            }
+        
+        <?php if (isset($erreur)) : ?>
+            
+    <p id="message" 
+       class="bg-red-500 w-full border border-green-300 p-2 rounded text-white font-bold">
+        <?= htmlspecialchars($erreur) ?>
+    </p>
+<?php endif; ?>
 
-            ?>
          
    
 
@@ -100,6 +96,19 @@ function authenticateUser($pdo, $mailconnect,$mdpconnect)
     </form>
    
   </div>
+  <script>
+    // Faire disparaître le message après 5 secondes
+    setTimeout(function() {
+        var message = document.getElementById("message");
+        if (message) {
+            message.style.transition = "opacity 0.5s ease";
+            message.style.opacity = "0";
+            setTimeout(() => message.remove(), 500); // Supprime complètement après la transition
+        }
+    }, 5000);
+</script>
+
 </body>
 
 </html>
+

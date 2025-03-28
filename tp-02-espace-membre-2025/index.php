@@ -119,6 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
         Déjà un compte ?<a
             href="connexion.php">Se connecter</a>
+        <a href="profil.php"></a>
 
     </form>
 

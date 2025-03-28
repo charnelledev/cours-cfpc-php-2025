@@ -5,7 +5,6 @@ require_once "database.php";
 
 if(isset($_GET['id'] )){
   // Si la variable est bien un nombre entier et positive
-  
   $getid = intval($_GET['id']);
   $requser = $pdo->prepare('SELECT * FROM membres WHERE id =?');
   $requser->execute([$getid]);
@@ -16,6 +15,7 @@ if(isset($_GET['id'] )){
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
