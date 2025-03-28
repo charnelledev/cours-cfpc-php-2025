@@ -35,6 +35,7 @@ function authenticateUser($pdo, $mailconnect,$mdpconnect)
     //aligner le code
 
     // echo "<pre>";
+    //    var_dump($userinfo);
     // // (afficher uniquement le mot de passe)
     // print_r($userinfo['mdp']);
     // echo "</pre>";

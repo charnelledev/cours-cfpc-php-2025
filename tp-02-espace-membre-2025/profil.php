@@ -9,6 +9,7 @@ if(isset($_GET['id'] )){
   $requser = $pdo->prepare('SELECT * FROM membres WHERE id =?');
   $requser->execute([$getid]);
   $userinfo = $requser->fetch();
+    
 
 }
 
@@ -38,7 +39,7 @@ if(isset($_GET['id'] )){
     if(isset($_SESSION['id']) && $userinfo['id'] == $_SESSION['id']){
       ?>
     <br />
-    <a href="editionprofil.php">Editer mon profil</a>
+    <a href="editprofil.php">Editer mon profil</a>
     <a href="deconnexion.php">Se déconnecter</a>
 
     <?php
