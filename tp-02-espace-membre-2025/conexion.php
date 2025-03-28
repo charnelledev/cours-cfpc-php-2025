@@ -30,6 +30,9 @@ function authenticateUser($pdo, $mailconnect,$mdpconnect)
         return "se mail est introuvable";
     }
     $userinfo = $reqMail->fetch();
+    if (!$userinfo) {
+        return "Ce mail est introuvable";
+    }
 
     //aligner le code
 
@@ -41,13 +44,17 @@ function authenticateUser($pdo, $mailconnect,$mdpconnect)
     // die();
 
     if(!password_verify($mdpconnect,$userinfo['mdp'])){
-        return "Mot de passe incorrect";
+        return 'Mot de passe incorrect';
     }
         return 'success';
 }
     $erreur = handlePostRequest($pdo);
 
-?>
+
+
+
+
+?> 
 
 
 
