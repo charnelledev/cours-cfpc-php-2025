@@ -60,6 +60,31 @@ if(isset($_SESSION['id']) AND $_SESSION['id']>0){
 
 
  }
+ //mise a jour du mot du mdp
+ 
+ if(!empty($_POST['newmdp1']) &&!empty($_POST['newmdp2'])){
+  if($_POST['newmdp1'] === $_POST['newmdp2']){
+    $newMdp = password_hash($_POST['newmdp1'],PASSWORD_DEFAULT);
+    $requpdate = $pdo->prepare("UPDATE membres SET mdp =? WHERE id = ?");
+    $requpdate->execute([$newMdp, $_SESSION['id']]);
+  }else{
+    $erreur = "vos mots de passe ne corespondent pas!";
+  }
+ 
+ }else{
+   $erreur= "veillez remplir les champs de mot de passe";
+ }
+
+
+
+ //mise a jour de l'avatar
+ 
+
+
+ //verification de la presence d'un fichier uploade
+ if(!empty($_FILES['avatar']['name'])){
+
+ }
 ?>
 
 <!DOCTYPE html>
@@ -69,19 +94,12 @@ if(isset($_SESSION['id']) AND $_SESSION['id']>0){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TUTO PHP</title>
 </head>
-<body>
+<body class="bg-green-100 pt-[100px] font-family-Poppins">
   <div align="center">
     <h2>Edition de mon profil</h2>
     <?php
 if (isset($erreur)) {
 echo '<font color="red">' . $erreur . "</font>";
-}
-//mise a jour du mot de passe
-
-if(!empty($_POST['newmdp1']) &&!empty($_POST['newmdp1'])){
-
-}else{
-  $erreur= "veillez remplir les champs de mot de passe";
 }
 ?>
     <div align="left">
