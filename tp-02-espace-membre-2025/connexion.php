@@ -115,7 +115,7 @@ function authenticateUser($pdo, $mailconnect,$mdpconnect)
     setTimeout(function() {
         var message = document.getElementById("message");
         if (message) {
-            message.style.transition = "opacity 0.5s ease";
+            message.style.transition = "opacity 0.3s ease";
             message.style.opacity = "0";
             setTimeout(() => message.remove(), 500); // Supprime complètement après la transition
         }
