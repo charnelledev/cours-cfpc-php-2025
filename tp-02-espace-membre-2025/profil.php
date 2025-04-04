@@ -29,7 +29,7 @@ if(isset($_GET['id'] )){
     <br />
 
     <?php if(!empty($userinfo['avatar'])){?>
-    <img src="membres/avatars/<?= $userinfo['avatar']; ?>" width="222">
+    <img src="membres/<?= $userinfo['avatar']; ?>" width="222">
     <?php  }?>
 
     <h3><?= $userinfo['mail']; ?></h3>

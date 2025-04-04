@@ -59,7 +59,7 @@ if(isset($_SESSION['id']) AND $_SESSION['id']>0){
             }
 
 
- }
+      
  //mise a jour du mot du mdp
  
  if(!empty($_POST['newmdp1']) &&!empty($_POST['newmdp2'])){
@@ -82,9 +82,41 @@ if(isset($_SESSION['id']) AND $_SESSION['id']>0){
 
 
  //verification de la presence d'un fichier uploade
- if(!empty($_FILES['avatar']['name'])){
+        if(!empty($_FILES['avatar']['name'])){
+            $maxIze= 2*1024*1024;
+            $validExt=['jpg','jpeg','gif','png'];
 
- }
+            //verification de la taille de limage
+
+            if($_FILES['avatar']['size']<=$maxIze){
+              //recuperation de l'extension du fichier
+              $ext = strtolower(pathinfo($_FILES['avatar']['name'], PATHINFO_EXTENSION));
+              //verification de l'extension  du fichier autoriser
+              if(in_array($ext,$validExt)){
+                //renomer limage uploade(id de l'utilisateur. l'extension de l'image)
+                $newFilename = $_SESSION['id'] . "." .$ext;
+                $destination = "membres/" .$newFilename;
+
+                if(move_uploaded_file($_FILES['avatar']['tmp_name'],$destination)){
+                  $requpdate = $pdo->prepare("UPDATE membres SET avatar = ?WHERE id=?");
+                  $requpdate->execute([$newFilename,$_SESSION['id']]);
+                  header("Location:profil.php?id=".$_SESSION['id']);
+                  exit();
+                }else{
+                  $erreur= "erreur lor de l'uploade de limage";
+                }
+
+              }else{
+                $erreur ="format d'image non autoriser('jpg','jpeg','gif','png' requis)!";
+              }
+
+            }else{
+              $erreur = "la taille de limage ne doit pas depasser 2 Mo";
+            }
+        }else{
+          $erreur = "veillez selectionner une image !";
+        }
+}
 ?>
 
 <!DOCTYPE html>
@@ -93,21 +125,52 @@ if(isset($_SESSION['id']) AND $_SESSION['id']>0){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TUTO PHP</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 <body class="bg-green-100 pt-[100px] font-family-Poppins">
   <div align="center">
-    <h2>Edition de mon profil</h2>
+    <h2 class="text-4xl font-bold text-green-900 text-center mb-6">Edition de mon profil</h2>
     <?php
 if (isset($erreur)) {
 echo '<font color="red">' . $erreur . "</font>";
 }
 ?>
-    <div align="left">
-      <form method="POST" action="" enctype="multipart/form-data">
-        <label>Pseudo :</label>
-        <input type="text" name="newpseudo" placeholder="Pseudo" value="<?= $user['pseudo'] ?? "" ?>" /><br /><br />
+<div class="flex flex-col gap-[7px] pt-[7px]">
+
+  <form method="POST" action="" enctype="multipart/form-data"  class="bg-white p-6 rounded shadow max-w-lg mx-auto">
+
+
+
+<label>Pseudo :</label>
+
+<!-- E-mail : <input type="email" name="mailconnect" placeholder="Mail" /> <br><br> -->
+<input type="text" placeholder="pseudo" id="mailconnect" name="newpseudo" value="<?= $user['pseudo'] ?? "" ?>"  class="w-full border border-green-300 p-2 rounded focus:outline-none focus:border-green-500" /> <br /><br />
+
+<label>Mail :</label>
+
+<input type="text" placeholder="mail" id="mdpconnect" name="newmail" value="<?= $user['mail'] ?? "" ?>" class="w-full border border-green-300 p-2 rounded focus:outline-none focus:border-green-500" />
+<!-- PassWord : <input type="password" name="mdpconnect" placeholder="Mot de passe" /> -->
+<br /><br />
+<label for="mdp">Mot de passe :</label>
+<input type="password" placeholder="mot de passe" id="mdp" name="newmdp1" class="w-full border border-green-300 p-2 rounded focus:outline-none focus:border-green-500" />
+<br /><br />
+<label for="mdp">confirmation Mot de passe:</label>
+<input type="password" placeholder="confirmation du mot de passe" id="newmdp2" name="newmdp1" class="w-full border border-green-300 p-2 rounded focus:outline-none focus:border-green-500" />
+<br /><br />
+
+<label for="">Avatar :</label>
+<input type="file" name="avatar" /><br /><br />
+<input type="submit" value="Mettre à jour mon profil !" class="w-full border border-green-300 p-2 rounded focus:outline-none focus:border-green-500 bg-green-100 cursor-pointer"/>
+</form>
+
+
+
+
+
+        <!-- <label>Pseudo :</label>
+        <input type="text" name="newpseudo" placeholder="Pseudo" value=">" /><br /><br />
         <label>Mail :</label>
-        <input type="text" name="newmail" placeholder="Mail" value="<?= $user['mail'] ?? "" ?>" /><br /><br />
+        <input type="text" name="newmail" placeholder="Mail" value="" /><br /><br />
         <label>Mot de passe :</label>
         <input type="password" name="newmdp1" placeholder="Mot de passe" /><br /><br />
         <label>Confirmation - mot de passe :</label>
@@ -115,6 +178,7 @@ echo '<font color="red">' . $erreur . "</font>";
         <label for="">Avatar :</label>
         <input type="file" name="avatar" /><br /><br />
         <input type="submit" value="Mettre à jour mon profil !" />
+
       </form>
      
     </div>
