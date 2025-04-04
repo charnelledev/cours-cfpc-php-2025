@@ -55,8 +55,29 @@ function authenticateUser($pdo, $mailconnect,$mdpconnect)
     $_SESSION['id']= $userinfo['id'];
     $_SESSION['pseudo']= $userinfo['pseudo'];
     $_SESSION['mail']= $userinfo['mail'];
-    header("Location: profil.php?id=" .$_SESSION['id']);
-    exit();
+    //si l'utilisateur est authentifier,on enregistre son role dans la session
+    $_SESSION['role'] = $userinfo['role'];
+    $_SESSION['auth']=$userinfo;
+
+    //redirection selons le role de l'utilisateur
+    switch ($_SESSION['role']) {
+        case 'admin':
+            header("Location: admindfhhtyu/admindfhhtyu-dashboard.php");
+            break;
+        case 'user':
+            header("Location: profil.php?id=" .$_SESSION['id']);
+            break;
+        default:
+            return "Role inconnu";
+    }
+
+
+
+
+
+    //redirection vers la page dedition
+    // header("Location: profil.php?id=" .$_SESSION['id']);
+    // exit();
         // return 'success';
 }
     $erreur = handlePostRequest($pdo);
