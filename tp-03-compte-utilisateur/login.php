@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <a href="#" class="text-sm text-teal-600 hover:underline">Mot de passe oublié ?</a>
       </div>
       <button type="submit" class="w-full bg-teal-600 text-white font-semibold py-2 rounded-xl shadow-md hover:bg-teal-700 transition">Se connecter</button>
-      <p class="text-center text-sm text-gray-600 mt-3">Pas encore de compte ? <a href="#" class="text-teal-600 font-medium hover:underline">S'inscrire</a></p>
+      <p class="text-center text-sm text-gray-600 mt-3">Pas encore de compte ? <a href="register.php" class="text-teal-600 font-medium hover:underline">S'inscrire</a></p>
     </form>
   </div>
 </body>
