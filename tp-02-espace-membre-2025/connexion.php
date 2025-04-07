@@ -63,6 +63,7 @@ function authenticateUser($pdo, $mailconnect,$mdpconnect)
     switch ($_SESSION['role']) {
         case 'admin':
             header("Location: admindfhhtyu/admindfhhtyu-dashboard.php");
+            header("Location: gestion-students.php");
             break;
         case 'user':
             header("Location: profil.php?id=" .$_SESSION['id']);
