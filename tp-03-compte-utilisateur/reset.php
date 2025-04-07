@@ -1,6 +1,8 @@
 <?php
 // reset.php (demande de réinitialisation de mot de passe)
 $success = $error = '';
+// OU appel de la fonction generateToken() depuis reset.php
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $email = trim($_POST['email'] ?? '');
 

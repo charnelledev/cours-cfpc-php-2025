@@ -10,7 +10,7 @@ $password="";
 try {
     $pdo= new PDO($dsn, $username, $password, );
   
-    echo "Succès : Connexion à la base de données établie avec succès !";
+    echo "Succès!";
   } catch (Exception $e) {
     echo "Erreur : " . $e->getMessage();
   }
