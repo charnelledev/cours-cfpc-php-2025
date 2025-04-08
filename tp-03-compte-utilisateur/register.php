@@ -75,10 +75,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <label class="block mb-1 text-sm font-medium text-gray-700">Email</label>
         <input type="email" class="w-full px-4 py-2 border rounded-xl shadow-sm focus:ring-2 focus:ring-purple-500 outline-none">
       </div>
+      <!-- <div>
+        <label class="block mb-1 text-sm font-medium text-gray-700">confirmation de l'email</label>
+        <input type="email2" class="w-full px-4 py-2 border rounded-xl shadow-sm focus:ring-2 focus:ring-purple-500 outline-none"> -->
+      <!-- </div> -->
       <div>
         <label class="block mb-1 text-sm font-medium text-gray-700">Mot de passe</label>
         <input type="password" class="w-full px-4 py-2 border rounded-xl shadow-sm focus:ring-2 focus:ring-purple-500 outline-none">
       </div>
+      <!-- <div>
+        <label class="block mb-1 text-sm font-medium text-gray-700">confirmer votre mot de passe</label>
+        <input type="password2" class="w-full px-4 py-2 border rounded-xl shadow-sm focus:ring-2 focus:ring-purple-500 outline-none">
+      </div> -->
       <button type="submit" class="w-full bg-purple-600 text-white font-semibold py-2 rounded-xl shadow-md hover:bg-purple-700 transition">S'inscrire</button>
       <p class="text-center text-sm text-gray-600 mt-3">Déjà inscrit ? <a href="login.php" class="text-purple-600 font-medium hover:underline">Connexion</a></p>
     </form>

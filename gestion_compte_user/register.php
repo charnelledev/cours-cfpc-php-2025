@@ -55,7 +55,8 @@ if(empty($errors)){
        'email' =>$_POST['email'],
        'password' =>$password
     ]);
- 
+     header('Location: login.php');
+     exit();
 }
 }
 
