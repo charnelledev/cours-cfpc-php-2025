@@ -61,12 +61,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <title>Inscription</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 min-h-screen flex items-center justify-center">
+<body class="bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 min-h-screen flex items-center justify-center mt-20 mb-20">
   <div class="bg-white p-10 rounded-2xl shadow-2xl w-full max-w-md">
     <h1 class="text-3xl font-bold text-center text-purple-700 mb-6">Créer un compte</h1>
 
           
-    <form class="space-y-5">
+    <form class="space-y-5" method="POST" action="">
+      
       <div>
         <label class="block mb-1 text-sm font-medium text-gray-700">Nom</label>
         <input type="text" class="w-full px-4 py-2 border rounded-xl shadow-sm focus:ring-2 focus:ring-purple-500 outline-none">
@@ -75,18 +76,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <label class="block mb-1 text-sm font-medium text-gray-700">Email</label>
         <input type="email" class="w-full px-4 py-2 border rounded-xl shadow-sm focus:ring-2 focus:ring-purple-500 outline-none">
       </div>
-      <!-- <div>
+      <div>
         <label class="block mb-1 text-sm font-medium text-gray-700">confirmation de l'email</label>
-        <input type="email2" class="w-full px-4 py-2 border rounded-xl shadow-sm focus:ring-2 focus:ring-purple-500 outline-none"> -->
-      <!-- </div> -->
+        <input type="email2" class="w-full px-4 py-2 border rounded-xl shadow-sm focus:ring-2 focus:ring-purple-500 outline-none">
+      </div>
       <div>
         <label class="block mb-1 text-sm font-medium text-gray-700">Mot de passe</label>
         <input type="password" class="w-full px-4 py-2 border rounded-xl shadow-sm focus:ring-2 focus:ring-purple-500 outline-none">
       </div>
-      <!-- <div>
+      <div>
         <label class="block mb-1 text-sm font-medium text-gray-700">confirmer votre mot de passe</label>
         <input type="password2" class="w-full px-4 py-2 border rounded-xl shadow-sm focus:ring-2 focus:ring-purple-500 outline-none">
-      </div> -->
+      </div>
       <button type="submit" class="w-full bg-purple-600 text-white font-semibold py-2 rounded-xl shadow-md hover:bg-purple-700 transition">S'inscrire</button>
       <p class="text-center text-sm text-gray-600 mt-3">Déjà inscrit ? <a href="login.php" class="text-purple-600 font-medium hover:underline">Connexion</a></p>
     </form>
