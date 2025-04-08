@@ -2,7 +2,7 @@
  $servername = "127.0.0.1";
  $username = "root";
  $password = "";
- $database = "gestion_compte_user-cfpc-2025";
+ $database = "gestion_compte_user";
 try {
      $pdo= new PDO("mysql:host=$servername;dbname=$database", $username, $password);
      // 2-Configurer le mode d'erreur pour lancer des exceptions
