@@ -13,8 +13,39 @@ if(isset($_POST)){
         "/^[a-zA-Z0-9_]{3,20}$/",
         $_POST['username'])){
         $errors['username']="veillez entrer un nom d'utilisateur valide(3-20 caractères)";
-            var_dump($errors['username']);
+            // var_dump($errors['username']);
+        }else{
+            $query=$pdo->prepare("SELECT * FROM users WHERE username=?");
+            $query->execute([$_POST['username']]);  
+            $user=$query->fetch(PDO::FETCH_ASSOC);
+            if($user){
+                $errors['username']="Ce nom d'utilisateur existe déjà";
+            }
         }
+
+        //email
+        if(empty($_POST['email']) ||
+        !filter_var($_POST['email'],FILTER_VALIDATE_EMAIL)){
+            $errors['email']="veillez entrer un adresse email valide";
+        }else{
+            $query=$pdo->prepare("SELECT * FROM users WHERE email=?");
+            $query->execute([$_POST['email']]);  
+            $user=$query->fetch(PDO::FETCH_ASSOC);
+            if($user){
+                $errors['email']="Cette adresse email existe déjà";
+            }
+        }
+
+        //password
+        if (empty($_POST['password']) ||
+        !preg_match(
+            "/[a-zA-Z0-9_]{8,}$/",
+            $_POST['password']
+        )) {
+        $errors['password'] = "Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule et un chiffre";
+    } elseif ($_POST['password'] !== $_POST['confirm_password']) {
+        $errors['confirm_password'] = "Les mots de passe ne correspondent pas";
+}
 }
 
 ?>
@@ -34,15 +65,15 @@ if(isset($_POST)){
         <form action="" class="form" id="form" method="post" enctype="multipart/form-data">
             <div class="form-control">
                 <label for="username">Nom d'utilisateur</label>
-                <input type="text" id="username" placeholder="rostodev" name="username" autocomplete="off"
-                    value="">
+                <input type="text" id="username" placeholder="nom" name="username" autocomplete="off"
+                    value="<?= isset($_POST['username']) ? $_POST['username']: ''; ?>">
 
             </div>
 
             <div class="form-control">
                 <label for="email">Email</label>
-                <input type="email" id="email" placeholder="rostodev@gmail.com" name="email" 
-                value="">
+                <input type="email" id="email" placeholder="veillez entrer votre email" name="email" 
+                value="<?= isset($_POST['email']) ? $_POST['email']: ''; ?>">
             </div>
 
             <div class="form-control">
