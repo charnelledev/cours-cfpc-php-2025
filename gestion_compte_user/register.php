@@ -2,14 +2,16 @@
 session_start();
 require_once('./includes/database.php');
 
-if($_POST){
+if(isset($_POST)){
     $errors=[];
     // echo "<pre>";
     // print_r($_POST);
     // echo "</pre>";
     // $usernamme
-    if(empty($_POST['username'] ||
-    !preg_match("/^[a-zA-Z0-9_]{3,20}$/",$_POST['username']))){
+    if(empty($_POST['username']) ||
+    !preg_match(
+        "/^[a-zA-Z0-9_]{3,20}$/",
+        $_POST['username'])){
         $errors['username']="veillez entrer un nom d'utilisateur valide(3-20 caractères)";
             var_dump($errors['username']);
         }
@@ -26,7 +28,7 @@ if($_POST){
         </div>
         <?php
         if (!empty($errors)) {
-            echo '<div style="color:white; text-align: center; background-color:#ff6c6c;padding:2px 7px; margin-bottom:10px; font-size:23px;">' . reset($errors) . '</div>';
+            echo '<div style="color:white; text-align: center; background-color:#ff6c6c; padding:2px 7px; margin-bottom:10px; font-size:23px;">' . reset($errors) .'</div>';
         }
         ?>
         <form action="" class="form" id="form" method="post" enctype="multipart/form-data">
