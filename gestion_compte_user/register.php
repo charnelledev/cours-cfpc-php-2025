@@ -43,8 +43,19 @@ if(isset($_POST)){
             $_POST['password']
         )) {
         $errors['password'] = "Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule et un chiffre";
-    } elseif ($_POST['password'] !== $_POST['confirm_password']) {
+    } else if ($_POST['password'] !== $_POST['confirm_password']) {
         $errors['confirm_password'] = "Les mots de passe ne correspondent pas";
+}
+//INSERT INTO
+if(empty($errors)){
+    $password=password_hash($_POST['password'],PASSWORD_BCRYPT);
+    $query=$pdo->prepare("INSERT INTO users (username,email,password) VALUES (:username,:email,:password)");
+    $query->execute([
+       'username' => $_POST['username'],
+       'email' =>$_POST['email'],
+       'password' =>$password
+    ]);
+ 
 }
 }
 
