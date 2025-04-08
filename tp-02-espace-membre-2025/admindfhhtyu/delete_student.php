@@ -22,5 +22,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 }
 
 // Redirection vers la page de gestion
-header("Location: gestion-students.php");
+header("Location: admindfhhtyu-dashboard.php");
 exit;
+
+

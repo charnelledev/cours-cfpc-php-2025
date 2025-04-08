@@ -1,5 +1,10 @@
 <?php
+
+// register.php
 require_once "database2.php";
+
+
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     //recuperation des donnees du formulaires
     $nom = htmlspecialchars($_POST['nom']);
