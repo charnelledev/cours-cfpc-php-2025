@@ -27,13 +27,13 @@ require_once('./includes/function.php');
 // print_r($majuscule);
 // echo "</pre>";
 
-die();
+// die();
 
 if(isset($_POST)){
     $errors=[];
-    // echo "<pre>";
-    // print_r($_POST);
-    // echo "</pre>";
+    echo "<pre>";
+    print_r($_POST);
+    echo "</pre>";
     // $usernamme
     if(empty($_POST['username']) ||
     !preg_match(
@@ -50,47 +50,89 @@ if(isset($_POST)){
             }
         }
 
-        //email
-        if(empty($_POST['email']) ||
-        !filter_var($_POST['email'],FILTER_VALIDATE_EMAIL)){
-            $errors['email']="veillez entrer un adresse email valide";
+     //mail
+        if(empty($_POST['mail']) || !filter_var($_POST['mail'],FILTER_VALIDATE_EMAIL)){
+            $errors['mail']="veillez entrer un adresse mail valide";
         }else{
-            $query=$pdo->prepare("SELECT * FROM users WHERE email=?");
-            $query->execute([$_POST['email']]);  
+            $query=$pdo->prepare("SELECT * FROM users WHERE mail=?");
+            $query->execute([$_POST['mail']]);  
             $user=$query->fetch(PDO::FETCH_ASSOC);
             if($user){
-                $errors['email']="Cette adresse email existe déjà";
+                $errors['mail']="Cette adresse mail existe déjà";
             }
         }
 
+// die();
         //password
-        if (empty($_POST['password']) ||
-        !preg_match(
-            "/[a-zA-Z0-9_]{8,}$/",
-            $_POST['password']
-        )) {
-        $errors['password'] = "Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule et un chiffre";
-    } else if ($_POST['password'] !== $_POST['confirm_password']) {
-        $errors['confirm_password'] = "Les mots de passe ne correspondent pas";
-}
+            if (empty($_POST['password']) 
+            ) {
+            $errors['password'] = "Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule et un chiffre";
+        } else if ($_POST['password'] !== $_POST['confirm_password']) {
+            $errors['confirm_password'] = "Les mots de passe ne correspondent pas";
+        }
+
+    // if (empty($_POST['confirm_password'])) {
+    //     $errors['confirm_password'] = "Veuillez confirmer le mot de passe";
+    // } else if ($_POST['password'] !== $_POST['confirm_password']) {
+    //     $errors['confirm_password'] = "Les mots de passe ne correspondent pas";
+    // }
+
+    // echo "<pre>";
+    // print_r($errors);
+    // echo "</pre>";
+    // die();
 //INSERT INTO
 if(empty($errors)){
     $password=password_hash($_POST['password'],PASSWORD_BCRYPT);
-
+    $mail=$_POST['mail'];
+    $username=$_POST['username'];
+    
     //appele la function generateToken pour generer un  token aleatoire de 100 caractere
     $token=generateToken(100);
-
-    $query=$pdo->prepare("INSERT INTO users (username,email,password,confirmation_token) VALUES (:username,:email,:password,:confirmation_token)");
+    
+    $sql="INSERT INTO users (username,mail,  password, confirmation_token) VALUES (:username,:mail, :password,:confirmation_token)";
+    
+    $query=$pdo->prepare($sql);
     
     //Exection de la requete avec parametre nommer 
     $query->execute([
-       'username' => $username,
-       'email' =>$email,
-       'password' =>$password,
-       'confirmation_token' =>$token,
-    ]);
-    //  header('Location: login.php');
-    //  exit();
+        "mail" => $mail,
+        "username" => $username,
+        "password" => $password,
+        "confirmation_token" => $token,]);
+
+        $userId=$pdo->lastInsertId();
+        $mail = $_POST['mail'];
+        $subject = "Confirmation du compte";
+        $link = "http://localhost/cours-cfpc-php-2025/gestion_compte_user//confirm?id=$userId&token=$token";
+
+        $message = "Afin de confirmer votre compte, merci de cliquer sur ce lien : 
+        <a href='$link'>Confirmer mon compte</a>";
+
+        // Envoi de l'e-mail en utilisant le format HTML
+        $headers = "MIME-Version: 1.0" . "\r\n";
+        $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+        mail($mail, $subject, $message, $headers);
+
+
+        
+        // $userId=$pdo->lastInsertId();
+
+        // $mail = $_POST['mail'];
+        // $subject = "Confirmation du compte";
+        // link = "http://localhost/cours-cfpc-php-2025/gestion_compte_user/confirm?id=$userId&token=$token";
+        // $message = "Afin de confirmer votre compte, merci de cliquer sur ce lien";
+        // $message .= "<br>"; : 
+        // <a href='$link'>Confirmer mon compte</a> 
+        // // Envoi de l'e-mail en utilisant le format HTML
+        // $headers = "MIME-Version: 1.0" . "\r\n";
+        // $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+        // mail($mail, $subject, $message, $headers);  
+        
+        // mail($mail,$subject,$message);
+
+        // var_dump($userId);
+        // die();   
 }
 }
 
@@ -112,15 +154,16 @@ if(empty($errors)){
             <div class="form-control">
                 <label for="username">Nom d'utilisateur</label>
                 <input type="text" id="username" placeholder="nom" name="username" autocomplete="off"
-                    value="<?= isset($_POST['username']) ? $_POST['username']: ''; ?>">
-
+                value="<?= isset($_POST['username']) ? $_POST['username']: ''; ?>">
+                
             </div>
-
             <div class="form-control">
-                <label for="email">Email</label>
-                <input type="email" id="email" placeholder="veillez entrer votre email" name="email" 
-                value="<?= isset($_POST['email']) ? $_POST['email']: ''; ?>">
+                <label for="mail">mail</label>
+                <input type="email" id="mail" placeholder="nom" name="mail" autocomplete="off">
+            
             </div>
+
+            
 
             <div class="form-control">
                 <label for="password">Mot de passe</label>
