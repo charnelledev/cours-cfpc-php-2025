@@ -1,6 +1,33 @@
 <?php
 session_start();
 require_once('./includes/database.php');
+require_once('./includes/function.php');
+
+
+// chifre de 1 a 9
+// $chiffre = range(0, 9);
+// // lettre de a a z
+// $minuscule = range('a','z');
+// // lettre de A a Z
+// $majuscule = range('A','Z');
+
+// $token= generateToken(100);
+
+// echo "<pre>";
+// print_r($token);
+// echo "</pre>";
+// die();
+
+// echo "<pre>";
+// print_r($minuscule);
+// echo "</pre>";
+
+
+// echo "<pre>";
+// print_r($majuscule);
+// echo "</pre>";
+
+die();
 
 if(isset($_POST)){
     $errors=[];
@@ -49,14 +76,21 @@ if(isset($_POST)){
 //INSERT INTO
 if(empty($errors)){
     $password=password_hash($_POST['password'],PASSWORD_BCRYPT);
-    $query=$pdo->prepare("INSERT INTO users (username,email,password) VALUES (:username,:email,:password)");
+
+    //appele la function generateToken pour generer un  token aleatoire de 100 caractere
+    $token=generateToken(100);
+
+    $query=$pdo->prepare("INSERT INTO users (username,email,password,confirmation_token) VALUES (:username,:email,:password,:confirmation_token)");
+    
+    //Exection de la requete avec parametre nommer 
     $query->execute([
-       'username' => $_POST['username'],
-       'email' =>$_POST['email'],
-       'password' =>$password
+       'username' => $username,
+       'email' =>$email,
+       'password' =>$password,
+       'confirmation_token' =>$token,
     ]);
-     header('Location: login.php');
-     exit();
+    //  header('Location: login.php');
+    //  exit();
 }
 }
 
