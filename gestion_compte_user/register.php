@@ -113,6 +113,11 @@ if(empty($errors)){
         $headers = "MIME-Version: 1.0" . "\r\n";
         $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
         mail($mail, $subject, $message, $headers);
+        //envoyez un message de success ver la page de conexion
+        $_SESSION['flash']['success'] = "Un email de confirmation a été envoyé à l'adresse $mail. Veuillez verifier votre boites de receptionbafin de confirmer votre mot de passe.";
+        header('Location: login.php');
+        exit();
+
 
 
         
